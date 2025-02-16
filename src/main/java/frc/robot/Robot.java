@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
 
   private final SparkMax rollerMotor = new SparkMax(5, MotorType.kBrushed);
   private final SparkMax catchMotor = new SparkMax(7, MotorType.kBrushed);
+  private final SparkMax lengthMotor = new SparkMax(3, MotorType.kBrushed);
   private final SparkMax leftLeader = new SparkMax(1, MotorType.kBrushed);
   private final SparkMax leftFollower = new SparkMax(2, MotorType.kBrushed);
   private final SparkMax rightLeader = new SparkMax(4, MotorType.kBrushed);
@@ -166,7 +167,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveSpeed = 2;
+    driveSpeed = -2;
     if(gamepad1.getYButton() == true){
         // timer2.start();
         // while (timer2.get()<=4) {
@@ -208,13 +209,36 @@ else
 {
 catchMotor.set(0);
 }
+if(gamepad1.getRightBumperButton() == true){
+  // timer2.start();
+  // while (timer2.get()<=4) {
+    lengthMotor.set(0.8);
+    System.out.println("Right");
+  // }
+  // rollerMotor.set(0);
+  // timer2.reset();
+}
+else if(gamepad1.getLeftBumperButton() == true){
+// timer2.start();
+System.out.println("Left");
+// while (timer2.get()<=4) {
+  lengthMotor.set(-1);
+// }
+// rollerMotor.set(0);
+// timer2.reset();
+}
+else 
+{
+lengthMotor.set(0);
+}
     
   //   if(gamepad0.getRightBumperButton()){
   //     driveSpeed = 1.3; //set back to full speed.
   // }
 
     //Uncomment the line below if you want tank style controls
-    myDrive.tankDrive(gamepad0.getLeftY()/driveSpeed, gamepad0.getRightY()/driveSpeed);
+    myDrive.tankDrive(gamepad0.getLeftY()/driveSpeed, -gamepad0.getRightY()/driveSpeed);
+    //System.out.println(gamepad0.getLeftY());
     //Uncomment the line below if you want arcade style controls
     //myDrive.arcadeDrive(-gamepad0.getLeftY()/driveSpeed, -gamepad0.getRightX()/driveSpeed);
 
